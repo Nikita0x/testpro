@@ -59,16 +59,18 @@ const ModalSelectSettings = ({ setModalSelectSettings, setSelectedName }) => {
         <ul className='modal-list-list'>
 
 
-          <Swiper
-            ref={swiperRef}
-            spaceBetween={10}
-            navigation={{
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            }}
-          >
+
             {users.map((user) => (
                 <>
+                <Swiper
+                    ref={swiperRef}
+                    spaceBetween={10}
+                    navigation={{
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                    }}
+                >
+
               <SwiperSlide key={user.id}>
                 <div key={user.id}>
                   <li className='user-name' key={user.id}>
@@ -94,9 +96,9 @@ const ModalSelectSettings = ({ setModalSelectSettings, setSelectedName }) => {
                   </button>
                 </div>
                 </SwiperSlide>
+                </Swiper>
               </>
             ))}
-          </Swiper>
 
 
 
