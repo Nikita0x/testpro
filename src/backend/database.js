@@ -61,4 +61,30 @@ function getAllUsersWithAllInfo(callback) {
   })
 }
 
-module.exports = { createUser, getUsers, getFullUserInfo, getAllUsersWithAllInfo };
+// delete a specific user
+function deleteUserById(id, callback) {
+  db.run('DELETE FROM listnames WHERE id = ?', [id], (err) => {
+    if (err) {
+      console.error('Error deleting user:', err.message);
+      callback(err);
+    } else {
+      console.log('User deleted successfully');
+      callback(null);
+    }
+  })
+}
+
+// Update user's icon by ID
+function updateUserIconById(id, newIcon, callback) {
+  db.run('UPDATE listnames SET icon = ? WHERE id = ?', [newIcon, id], (err) => {
+    if (err) {
+      console.error('Error updating user icon:', err.message);
+      callback(err);
+    } else {
+      console.log('User icon updated successfully');
+      callback(null);
+    }
+  });
+}
+
+module.exports = { createUser, getUsers, getFullUserInfo, getAllUsersWithAllInfo, deleteUserById, updateUserIconById };

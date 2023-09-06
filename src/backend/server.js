@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors')
-const {createUser, getUsers, getFullUserInfo, getAllUsersWithAllInfo} = require('./database')
+const {createUser, getUsers, getFullUserInfo, getAllUsersWithAllInfo, deleteUserById, updateUserIconById} = require('./database')
 app.use(cors())
 app.use(express.json())
 
@@ -80,6 +80,42 @@ app.get('/api/getAllUsersWithAllInfo', async (req, res) => {
     })
   } catch (error) {
     console.error(error)
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+//delete user by ID
+app.delete('/api/deleteUser/:id', async(req, res) => {
+  try {
+    const { id } = req.params;
+    deleteUserById(id, (err) => {
+      if (err) {
+        console.error('Error deleting user:', err.message);
+        return res.status(500).json({ error: 'Error deleting user' });
+      }
+      res.json({ message: 'User deleted successfully' });
+    })
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+//update user's icon by id
+app.put('/api/updateUserIcon/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { newIcon } = req.body;
+
+    updateUserIconById(id, newIcon, (err) => {
+      if (err) {
+        console.error('Error updating user icon:', err.message);
+        return res.status(500).json({ error: 'Error updating user icon' });
+      }
+      res.json({ message: 'User icon updated successfully'})
+    })
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 })

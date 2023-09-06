@@ -39,7 +39,7 @@ const Card = (props) => {
       }
   
       const data = await response.json()
-      console.log(data)
+      // console.log(data)
       handleGetUsers()
     } catch (error) {
       console.error(error);
@@ -62,7 +62,7 @@ const Card = (props) => {
       }
 
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       setUsers(data); 
 
     } catch (error) {
@@ -152,7 +152,7 @@ const Card = (props) => {
 
       {isModalSelectNameOpen && <ModalSelectName setModalSelectNameOpen={setModalSelectNameOpen} setSelectedName={setSelectedName}/>}
 
-      {isModalSelectSettings && <ModalSelectSettings setModalSelectSettings={setModalSelectSettings} setSelectedName={setSelectedName}/>}
+      {isModalSelectSettings && <ModalSelectSettings setModalSelectSettings={setModalSelectSettings} handleGetUsers={handleGetUsers}/>}
 
     </div>
   );

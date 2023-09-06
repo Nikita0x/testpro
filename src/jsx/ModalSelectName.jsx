@@ -13,7 +13,7 @@ const ModalSelectName = ({setModalSelectNameOpen, setSelectedName}) => {
       }
 
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       setUsers(data); 
 
     } catch (error) {

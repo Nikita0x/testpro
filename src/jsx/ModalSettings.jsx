@@ -3,8 +3,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 
-const ModalSelectSettings = ({ setModalSelectSettings, setSelectedName }) => {
+const ModalSelectSettings = ({ setModalSelectSettings, handleGetUsers }) => {
   const [users, setUsers] = useState([]);
+  const [iconUpdated, setIconUpdated] = useState(false);
+  const [userDeleted, setUserDeleted] = useState(false);
   const swiperRef = useRef(null);
 
   //function to get users from the database
@@ -19,7 +21,7 @@ const ModalSelectSettings = ({ setModalSelectSettings, setSelectedName }) => {
       }
 
       const data = await response.json();
-      console.log(data);
+    //   console.log(data);
       setUsers(data);
     } catch (error) {
       console.error(error);
@@ -30,14 +32,61 @@ const ModalSelectSettings = ({ setModalSelectSettings, setSelectedName }) => {
     handleGetAllUsers();
   }, []);
 
-  const handleEditClick = (user) => {
-    // Implement edit functionality here
-    console.log(`Editing user ${user.name}`);
+  const handleEditClick = async (user) => {
+    try {
+        const newIcon = prompt('Enter the new icon')
+
+        if (newIcon) {
+            const response = await fetch(`http://localhost:3001/api/updateUserIcon/${user.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                  },
+                body: JSON.stringify({newIcon})
+            })
+
+            if (response.ok) {
+                console.log(`Updated user icon to: ${newIcon}`);
+                // Update the user list with the new icon
+                setUsers((prevUsers) =>
+                  prevUsers.map((u) =>
+                    u.id === user.id ? { ...u, icon: newIcon } : u
+                  )
+                );
+                setIconUpdated(true)
+                setTimeout(() => {
+                    setIconUpdated(false) 
+                }, 2000);
+            } else {
+                console.error('Failed to update user icon');
+            }
+        }
+    } catch (error) {
+        console.error('Error updating user icon:', error);
+    }
   };
 
-  const handleDeleteClick = (user) => {
-    // Implement delete functionality here
-    console.log(`Deleting user ${user.name}`);
+  const handleDeleteClick = async (user) => {
+    try {
+        const response = await fetch(`http://localhost:3001/api/deleteUser/${user.id}`, {
+            method: 'DELETE',
+        })
+        if (response.ok) {
+            console.log(`Deleted user: ${user.name}`);
+            // Update user list to remove the deleted user
+            setUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));
+            handleGetUsers()
+            setUserDeleted(true)
+            setTimeout(() => {
+                setUserDeleted(false) 
+            }, 2000);
+          } else {
+            console.log(user)
+            console.error('Failed to delete user');
+          }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+    }
   };
 
   //close modal when clicked outside
@@ -55,6 +104,12 @@ const ModalSelectSettings = ({ setModalSelectSettings, setSelectedName }) => {
       <div className='modal-list-content'>
         <div className='modal-list-header'>
           <h4 className='modal-list-title'>Modal Settings</h4>
+          {iconUpdated && (
+            <p className='success-color'>Icon was updated successfully</p>
+          )}
+          {userDeleted && (
+            <p className='success-color'>User was <span className='highlight'>deleted</span> successfully</p>
+          )}
         </div>
         <ul className='modal-list-list'>
 
@@ -64,7 +119,7 @@ const ModalSelectSettings = ({ setModalSelectSettings, setSelectedName }) => {
                 <>
                 <Swiper
                     ref={swiperRef}
-                    spaceBetween={10}
+                    spaceBetween={0}
                     navigation={{
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
@@ -81,18 +136,18 @@ const ModalSelectSettings = ({ setModalSelectSettings, setSelectedName }) => {
                 </div>
               </SwiperSlide>
                 <SwiperSlide key={Math.random()}>
-                <div className='swipe-buttons'>
+                <div className='swiper-buttons'>
                   <button
-                    className='edit-button'
+                    className='swiper-buttons-edit'
                     onClick={() => handleEditClick(user)}
                   >
-                    Edit
+                    Edit icon
                   </button>
                   <button
-                    className='delete-button'
+                    className='swiper-buttons-delete'
                     onClick={() => handleDeleteClick(user)}
                   >
-                    Delete
+                    Delete user
                   </button>
                 </div>
                 </SwiperSlide>
