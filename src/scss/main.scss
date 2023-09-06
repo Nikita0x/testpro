@@ -1,0 +1,248 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+//variables
+$text-color: black;
+$bg-card-color: aliceblue;
+$btns-hover-color: rgb(149, 149, 229);
+$padding: 20px;
+
+// styles
+
+body {
+	padding-top: 50px;
+}
+
+.card-wrapper {
+	margin: 0 auto;
+	padding: $padding;
+	width: 400px;
+	min-height: 700px;
+	background-color: $bg-card-color;
+	border: 1px solid black;
+	position: relative;
+
+	&-header {
+		color: $text-color;
+		// border: 1px solid black;
+		text-align: center;
+		font-size: 30px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		padding-bottom: 15px;
+	}
+
+	&-main {
+		color: $text-color;
+		display: flex;
+		flex-direction: column;
+		overflow: auto;
+    	max-height: 300px;
+	}
+
+	&-footer {
+		height: 40px;
+		margin-top: 20px;
+		// border: 1px solid black;
+	}
+
+	&-footer-list {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+	}
+
+	&-item > a {
+		border: 1px solid black;
+		border-radius: 5px;
+		font-size: 20px;
+		padding: 5px;
+		color: $text-color;
+		text-decoration: none;
+		transition: background-color 0.1s ease-in-out;
+
+		&:hover {
+			background-color: $btns-hover-color;
+		}
+	}
+
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	margin-top: 30px;
+	padding: 10px;
+	// border: 1px solid black;
+	&-title {
+		text-align: center;
+		color: brown;
+	}
+	&-label {
+		overflow: hidden;
+    	text-overflow: ellipsis;
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+	&-input {
+		padding: 5px;
+		&:focus-within {
+			outline: 1px solid blue;
+		}
+	}
+}
+
+
+.list-users-title {
+	color:brown;
+	font-size: 23px;
+	font-weight: 600;
+	text-align: center;
+}
+
+.highlight {
+	color:brown;
+	padding: 5px;
+}
+.submit-btn-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.user-name {
+	border: 1px solid rgb(88, 88, 88);
+	padding: 10px;
+	border-bottom: none;
+	overflow: hidden;
+    text-overflow: ellipsis;
+
+	&:hover {
+		background-color: #9eacb8;
+		cursor: pointer;
+	}
+	&:active {
+		background-color: #7d8b96;
+		cursor: pointer;
+	}
+	&:last-child {
+		border-bottom: 1px solid rgb(88, 88, 88);
+	}
+}
+
+// modal-info
+
+.modal {
+	position: fixed;
+	inset: 0;
+	background-color: rgb(0, 0, 0, 0.4);
+	backdrop-filter: blur(10px);
+	color:white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.modal-content {
+	width: 400px;
+	min-height: 500px;
+	border: 1px solid white;
+}
+.modal-header{
+	text-align: center;
+	padding: 20px;
+}
+.modal-title {
+	font-size: 30px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+}
+.modal-body {
+	padding: 20px;
+	&-item {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-top: 5px;
+	}
+}
+
+// modal-name-list
+.modal-list {
+	position: fixed;
+	inset: 0;
+	background-color: rgb(0, 0, 0, 0.4);
+	backdrop-filter: blur(10px);
+	color:white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	&-content {
+		width: 400px;
+		min-height: 500px;
+		border: 1px solid white;
+	}
+	&-header {
+		text-align: center;
+		padding: 20px;
+	}
+	&-title {
+		font-size: 30px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	&-list {
+		max-height: 500px;
+    	overflow: auto;
+	}
+}
+
+.btn {
+	padding: 10px;
+	cursor: pointer;
+}
