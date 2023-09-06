@@ -126,9 +126,9 @@ const ModalSelectSettings = ({ setModalSelectSettings, handleGetUsers }) => {
                     }}
                 >
 
-              <SwiperSlide key={user.id}>
+              <SwiperSlide key={Math.random()}>
                 <div key={user.id}>
-                  <li className='user-name' key={user.id}>
+                  <li className='user-name' key={Math.random()}>
                     <span className='highlight'>id: </span>
                     {user.id} ,<span className='highlight'>name:</span>{' '}
                     {user.name}

@@ -101,7 +101,7 @@ const Card = (props) => {
       <main className='card-wrapper-main'><span className='list-users-title'>List of users</span>
       <ul>
         {users.map((user) => (
-          <li onClick={() => handleSelectName(user.name)} className='user-name' key={user.id}>{user.name}</li>
+          <li onClick={() => handleSelectName(user.name)} className='user-name' key={Math.random()}>{user.name}</li>
         ))}
       </ul>
       </main>
